@@ -1,2 +1,1 @@
 # OI
-# THIS A RECORD OF MY OI LIFE.
