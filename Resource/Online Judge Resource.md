@@ -18,9 +18,9 @@ Here are some online judges for practice.
 
 [**UOJ**](http://uoj.ac) —— An OJ with problems in NOI, CTSC, etc. 
 
-[**POJ**](http://www.poj.org) —— An OJ run by Peking University
+[**POJ**](http://poj.org) —— An OJ run by Peking University
 
 [**SPOJ**](http://www.spoj.com) —— An OJ with many interesting problems.
 
-[**HDU**](http://http://acm.hdu.edu.cn/) —— An OJ ran by HangZhou DianZi University
+[**HDU**](http://acm.hdu.edu.cn/) —— An OJ ran by HangZhou DianZi University
 
