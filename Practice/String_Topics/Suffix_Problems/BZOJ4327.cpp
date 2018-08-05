@@ -17,8 +17,7 @@ struct SA{
 	int idx(char c) {
 		if(c == 'E') return 1;
 		else if(c == 'S') return 2;
-		else if(c == 'W') return 3;
-		else if(c == 'N') return 0;
+		else if(c == 'W') return 3; else if(c == 'N') return 0;
 		return assert(0),0;
 	}
 	struct node{
