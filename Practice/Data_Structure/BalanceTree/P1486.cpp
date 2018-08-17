@@ -21,27 +21,13 @@ void pushdown(int cur) {
 	update(ch[cur][1],tag[cur]);
 	tag[cur] = 0;
 }
-void insert(int &cur,int v) {
-	pushdown(cur);
-	if (!cur) {
-		cur = ++tot;
-		cnt[cur] = sz[cur] = 1;
-		val[cur] = v;
-	}
-	else if (v == val[cur]) {
-		cnt[cur]++;
-		sz[cur]++;
-	}
-	else if (v < val[cur]) {
-		insert(ch[cur][0], v);
-		fa[ch[cur][0]] = cur;
-		maintain(cur);
-	}
-	else {
-		insert(ch[cur][1], v);
-		fa[ch[cur][1]] = cur;
-		maintain(cur);
-	}
+void newnode(int cur,int f,int v) {
+	sz[cur] = cnt[cur] = 1;
+	fa[cur] = f;
+	val[cur] = v;
+	if(f) ch[f][val[cur] > val[f]] = cur;
+	maintain(cur);
+	maintain(f);
 }
 void clear(int cur) {
 	val[cur] = ch[cur][0] = ch[cur][1] = sz[cur] = cnt[cur] = fa[cur] = 0;
@@ -65,6 +51,31 @@ void splay(int x, int target = 0){
 	}
 	if (!target) root = x;
 }
+void insert(int v) {
+	if (root == 0) {
+		clear(root);
+		root = ++tot;
+		newnode(root, 0, v);
+		return;
+	}
+	int now = root, f = 0;
+	while (1) {
+		pushdown(now);
+		if (v == val[now]) {
+			cnt[now]++;  maintain(now); maintain(f); splay(now);
+			break;
+		}
+		f = now;
+		now = ch[now][v > val[now]];
+		if (now == 0) {
+			now = ++tot;
+			clear(now);
+			newnode(now, f, v);
+			splay(now);
+			break;
+		}
+	}
+}
 int find_min(int cur) {
 	pushdown(cur);
 	if (val[cur] == INF) return cur;
@@ -84,10 +95,18 @@ int succ(int cur) {
 	return cur;
 }
 int find_k(int cur, int s) {
-	pushdown(cur);
-	if (sz[ch[cur][0]] >= s) return find_k(ch[cur][0], s);
-	else if (sz[ch[cur][0]] < s && s <= sz[ch[cur][0]] + cnt[cur]) return cur;
-	else return find_k(ch[cur][1], s - cnt[cur] - sz[ch[cur][0]]);
+	while (cur) {
+		pushdown(cur);
+		if (s <= sz[ch[cur][0]]) cur = ch[cur][0];
+		else {
+			if (sz[ch[cur][0]] < s && s <= sz[ch[cur][0]] + cnt[cur]) return cur;
+			else {
+				s -= cnt[cur] + sz[ch[cur][0]];
+				cur = ch[cur][1];
+			}
+		}
+	}
+	return 0;
 }
 void dfs(int cur) {
 	if(!cur) return;
@@ -106,7 +125,7 @@ void erase() {
 	int add = 0;
 	if (!y) {
 		add++;
-		insert(root, limit - 1);
+		insert(limit - 1);
 		y = find_val(root, limit - 1);
 	}
 	y = succ(y);
@@ -122,14 +141,15 @@ void erase() {
 int main() {
 	ios::sync_with_stdio(false);
 	cin >> N >> limit;
-	insert(root, INF); insert(root, -INF);
+	insert(INF); insert(-INF);
 	for (int i = 1; i <= N; i++) {
+	//	cout << "On Query No." << i << endl;
 		char opt;
 		int v;
 		cin >> opt >> v;
 		if (opt == 'I') {
 			if (v < limit) continue;
-			insert(root, v);
+			insert(v);
 		}
 		else if(opt == 'A'){
 			update(root, v);
