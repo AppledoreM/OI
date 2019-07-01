@@ -1,12 +1,10 @@
 # README
 --------
 
-This is a record of my own OI life. Hopefully it can help anyone. 
+Practice! Go Go Go!
 
 
 
-
-TO BE CONTINUED ......
 
 -------------
 
