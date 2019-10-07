@@ -15,7 +15,18 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
+    int n;
+    cin>>n;
 
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= n ;j++){
+            if((i + j) & 1){
+                cout<<"W";
+            }
+            else cout<<"B";
+        }
+        cout<<endl;
+    }
 
 
 
