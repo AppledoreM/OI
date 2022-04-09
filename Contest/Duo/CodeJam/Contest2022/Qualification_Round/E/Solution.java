@@ -46,65 +46,35 @@ public class Solution {
     public static void main(String[] args){
         Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
         int tt = in.nextInt();
-        Random rand = new Random(1L);
+        Random rand = new Random();
         loop: for(int _m = 0; _m < tt; ++_m){
             long n = in.nextLong(), k = in.nextLong(), cur = in.nextLong(), p = in.nextLong();
-            long tot = 0;
-            int ls = (int)n, i = 0;
-            if(ls <= k){
-                for(; i < ls; ++i){
-                    System.out.println("T " + (i + 1));
-                    System.out.flush();
-                    in.nextLong();
-                    long wh = in.nextLong();
-                    tot += wh;
-                }
+            double tot = 0.0;
+            long[] deg = new long[(int)n + 1];
+            for(int i = 0; i < 4000; ++i){
+                System.out.println("T " + (rand.nextInt((int)n) + 1));
+                System.out.flush();
+                in.nextLong();
+                long A = in.nextLong();
+                tot += A;
+                System.out.println("W");
+                System.out.flush();
+                long r = in.nextLong();
+                long B = in.nextLong();
+                deg[(int)r] = B;
             }
-            else{
-                HashSet<Integer> visited = new HashSet<>();
-                if(ls <= 16000){
-                    for(i = 0; i < ls - k; ++i){
-                        while(true){
-                            int r = rand.nextInt(ls);
-                            if(!visited.contains(r)){
-                                visited.add(r);
-                                break;
-                            }
-                        }
-
-                    }
-                    for(i = 1; i <= ls; ++i){
-                        if(!visited.contains(i)){
-                            System.out.println("T " + (i + 1));
-                            System.out.flush();
-                            in.nextLong();
-                            long wh = in.nextLong();
-                            tot += wh;
-
-                        }
-                    }
+            tot = tot / 4000;
+            double res = 0.0;
+            for(int i = 1; i <= (int)n; ++i){
+                if(deg[i] == 0L){
+                    res += tot;
                 }
                 else{
-                    for(i = 0; i < 8000; ++i){
-                        while(true){
-                            int r = rand.nextInt(ls);
-                            if(!visited.contains(r)){
-                                visited.add(r);
-                                break;
-                            }
-                        }
-                    }
-                    for(int ele : visited){
-                        System.out.println("T " + (ele + 1));
-                        System.out.flush();
-                        in.nextLong();
-                        long wh = in.nextLong();
-                        tot += wh;
-                    }
+                    res += deg[i];
                 }
-                i = 8000;
             }
-            System.out.println("E " + (tot * n / i) / 2);
+            long EE = (long)(res / 2 + 0.5);
+            System.out.println("E " + EE);
             System.out.flush();
         }
     }
