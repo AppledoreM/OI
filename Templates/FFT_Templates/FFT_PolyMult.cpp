@@ -5,8 +5,6 @@ typedef long long ll;
 typedef vector<ll> vll;
 typedef complex<double> cd;
 
-#define fastIO ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr)
-
 void fft(vector<cd> &a, bool invert){
 	int n = a.size();
 	if(n == 1)
